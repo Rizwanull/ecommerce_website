@@ -23,48 +23,44 @@ const filterReducer = (state, action) => {
       return {
         ...state,
         // sorting_value: sort_value,
-        sorting_value:action.payload,
+        sorting_value: action.payload,
       };
     // on the basis of selected option tag value product sortion
     case "SORTING_PRODUCTS":
-
       let newSortData;
-      // const { filter_products } = state;
-      let tempSortProduct = [...action.payload];
-      if (state.sorting_value === 'lowest') {
-        const sortingProducts = (a,b) => {
+      const { filter_products, sorting_value } = state;
+      let tempSortProduct = [...filter_products];
+
+      const sortingProducts = (a, b) => {
+        if (sorting_value === "lowest") {
           return a.price - b.price;
         }
-        newSortData=tempSortProduct.sort(sortingProducts);
-        console.log("🚀 ~ file: FilterReducer.js ~ line 38 ~ filterReducer ~ newSortData", newSortData)
-      }
-      if (state.sorting_value === 'highest') {
-        const sortingProducts = (a, b) => {
+        if (sorting_value === "highest") {
           return b.price - a.price;
-        };
-        newSortData=tempSortProduct.sort(sortingProducts);
-        console.log("🚀 ~ file: FilterReducer.js ~ line 45 ~ filterReducer ~ newSortData", newSortData)
-      }
-      if (state.sorting_value === 'a-z') {
-        newSortData = tempSortProduct.sort((a, b) =>
-          a.name.localeCompare(b.name)
-        );
-        console.log("🚀 ~ file: FilterReducer.js ~ line 32 ~ filterReducer ~ newSortData", newSortData)
-      }
-       if (state.sorting_value === 'z-a') {
-        newSortData = tempSortProduct.sort((a,b) =>
-          b.name.localeCompare(a.name)
-        );
-        console.log("🚀 ~ file: FilterReducer.js ~ line 57 ~ filterReducer ~ newSortData", newSortData)
-      }
+        }
+        if (sorting_value === "a-z") {
+          return a.name.localeCompare(b.name);
+        }
+        if (sorting_value === "z-a") {
+          return b.name.localeCompare(a.name);
+        }
+      };
+      newSortData = tempSortProduct.sort(sortingProducts);
       return {
         ...state,
         filter_products: newSortData,
-        
-        // products:newSortData,
-        
-      }
-      
+      };
+    // update filters value case in search
+    case "UPDATE_FILTERS_VALUE":
+      const { name, value } = action.payload;
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          [name]: value,
+        },
+      };
+
     default:
       return state;
   }

@@ -74,7 +74,8 @@ margin: 5rem 0 0 0;
   }
   .active{
     background-color: ${({ theme }) => theme.colors.black};
-    color: ${({theme})=>theme.colors.white};
+    color: ${({ theme }) => theme.colors.white};
+    
   }
 }
 `;
