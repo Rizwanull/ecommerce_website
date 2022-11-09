@@ -9,7 +9,9 @@ const initialState = {
   all_products: [],
   grid_view: true,
   sorting_value: "lowest",
-  filters: { text : "" },
+  filters: {
+    text: "",
+  },
 };
 
 export const FilterContextProvider = ({ children }) => {
