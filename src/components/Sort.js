@@ -30,7 +30,7 @@ const Sort = () => {
       </div>
       {/* 2nd column  */}
       <div className="product-total--data">
-        <p>{`${products.length} Product Available`}</p>
+        <p>{`${filter_products.length} Product Available`}</p>
       </div>
       {/* 3rd column  */}
       <div className="sort-selection">

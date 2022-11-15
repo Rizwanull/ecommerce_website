@@ -41,6 +41,7 @@ export const FilterContextProvider = ({ children }) => {
   // useEffect for to calling new sorted value
   useEffect(() => {
     dispatch({ type: "SORTING_PRODUCTS" });
+    dispatch({ type: "FILTER_OUT_PRODUCTS" });
   }, [products, state.sorting_value, state.filters]);
 
   useEffect(() => {

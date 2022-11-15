@@ -3,16 +3,22 @@ import styled from 'styled-components';
 import { useFilterContext } from '../context/Filter_Context';
 const FilterSection = () => {
   const { filters:{text}  , updateFilterValue } = useFilterContext();
-  console.log("🚀 ~ file: FilterSection.js ~ line 6 ~ FilterSection ~ text", text)
   return (
     <Wrapper>
       <div className="filter-search">
         <form onSubmit={(e) => e.preventDefault()}>
-          <input type="text" name='text' value={text} placeholder="search" onChange={updateFilterValue} />
+          <input
+            type="text"
+            name="text"
+            value={text}
+            placeholder="search"
+            autoComplete="off"
+            onChange={updateFilterValue}
+          />
         </form>
       </div>
     </Wrapper>
-  )
+  );
 }
 const Wrapper = styled.section`
 padding:5rem 0;

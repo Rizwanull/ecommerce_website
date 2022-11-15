@@ -7,17 +7,17 @@ const Product = (curElem) => {
         <div className="card">
             <figure>
                 <img src={image} alt={name} />
-                <figcaption className='caption'>{ category }</figcaption>
+                <figcaption className='caption'>{category}</figcaption>
             </figure>
             <div className="card-data">
                 <div className="card-data-flex">
                     <h3>{name}</h3>
-                    <div className="card-data--price">{<FormatPrice price={price}   />}</div>
+                    <div className="card-data--price">{<FormatPrice price={price} />}</div>
                 </div>
             </div>
             
-      </div>
-  </NavLink>;
+        </div>
+    </NavLink>;
 }
 
 export default Product
