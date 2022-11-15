@@ -66,7 +66,7 @@ const filterReducer = (state, action) => {
         },
       };
 
-    // for to filtered out the products on the basis of search words
+    // For to filtered out the products on the basis of search words
     case "FILTER_OUT_PRODUCTS":
       let { all_products } = state;
       let tempFilterProduct = [...all_products];
