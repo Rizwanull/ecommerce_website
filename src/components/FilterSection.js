@@ -2,7 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { useFilterContext } from '../context/Filter_Context';
 const FilterSection = () => {
-  const { filters:{text}  , updateFilterValue } = useFilterContext();
+  const { filters: { text }, updateFilterValue, all_products } = useFilterContext();
+
+  //We need unique data on the basis of 
+  
   return (
     <Wrapper>
       <div className="filter-search">

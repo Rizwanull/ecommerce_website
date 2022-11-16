@@ -5,7 +5,7 @@ import { useFilterContext } from '../context/Filter_Context';
 import { useProductContext } from '../context/productcontext';
 
 const Sort = () => {
-  const { products } = useProductContext();
+  // const { products } = useProductContext();
   const { grid_view ,setGridView,setListView,filter_products,sorting} = useFilterContext();
   // if (filter_products === undefined) {
   // return <h1>isuue and we fix them in second!</h1>

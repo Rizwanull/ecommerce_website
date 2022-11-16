@@ -36,7 +36,7 @@ const SingleProduct = () => {
   }, []);
 
   if (isSingleLoading) {
-    return <div className="page_loading">Loading.....</div>;
+    return <h2 className="page_loading">Loading.....</h2>;
   }
   return (
     <Wrapper>
