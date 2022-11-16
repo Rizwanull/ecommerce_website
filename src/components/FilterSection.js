@@ -4,7 +4,17 @@ import { useFilterContext } from '../context/Filter_Context';
 const FilterSection = () => {
   const { filters: { text }, updateFilterValue, all_products } = useFilterContext();
 
-  //We need unique data on the basis of 
+  // TO GET THE UNIQUE DATA 
+  const getUniqueData = (data, property) => {
+    let newVal = data.map((curElem) => {
+      return curElem[property];
+    });
+    newVal = ['All', ...new Set(newVal)];
+    console.log(newVal);
+  }
+
+  //We need unique data on the basis of category
+  const categoryOnlyData = getUniqueData(all_products,"category");
   
   return (
     <Wrapper>
