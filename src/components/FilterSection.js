@@ -9,7 +9,7 @@ const FilterSection = () => {
     let newVal = data.map((curElem) => {
       return curElem[property];
     });
-    return (newVal = ['All', ...new Set(newVal)]);
+    return (newVal = ['all', ...new Set(newVal)]);
     // console.log(newVal);
   }
 
