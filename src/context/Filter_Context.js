@@ -11,7 +11,7 @@ const initialState = {
   sorting_value: "lowest",
   filters: {
     text: "",
-    category: "all",
+    category:"all",
     company:"all"
   },
 };

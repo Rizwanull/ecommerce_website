@@ -14,8 +14,9 @@ const FilterSection = () => {
   }
 
   //We need unique data on the basis of category
-  const categoryOnlyData = getUniqueData(all_products,"category");
-  
+  const categoryOnlyData = getUniqueData(all_products, "category");
+  const companyOnlyData = getUniqueData(all_products, "company");
+   
   return (
     <Wrapper>
       <div className="filter-search">
@@ -33,10 +34,36 @@ const FilterSection = () => {
       <div className="filter-category">
         <h3>Category</h3>
         <div>
-          {categoryOnlyData.map((curElem,index) => {
-            return <button className={curElem === category ? "active":""} key={index} type='button' name='category' value={curElem} onClick={updateFilterValue}>{curElem}</button>
+          {categoryOnlyData.map((curElem, index) => {
+            return (
+              <button
+                className={curElem === category ? "active" : ""}
+                key={index}
+                type="button"
+                name="category"
+                value={curElem}
+                onClick={updateFilterValue}
+              >
+                {curElem}
+              </button>
+            );
           })}
         </div>
+      </div>
+      <div className="filter-company">
+        <h3>Company</h3>
+        <form action="#">
+          <select
+            name="company"
+            id="company"
+            className="filter-company--select"
+            onClick={updateFilterValue}
+          >
+            {companyOnlyData.map((curElem, index) => {
+              return <option key={index} name="company" value={curElem}> {curElem} </option>
+            })}
+          </select>
+        </form>
       </div>
     </Wrapper>
   );
@@ -51,6 +78,9 @@ gap: 3rem;
     width: 80%;
     padding: 0.8rem 1rem;
   }
+}
+h3{
+  font-weight: 600;
 }
 .filter-category{
   div{
@@ -73,6 +103,17 @@ gap: 3rem;
     }
   }
 }
+.filter-company{
+  form{
+    padding: 0.5rem 0;
+  }
+.filter-company--select{
+padding: 0.3rem 1.2rem;
+font-size:1.6rem;
+text-transform: capitalize;
+color: ${({theme})=>theme.colors.text};
+}
+}
 
 `;
-export default FilterSection
+export default FilterSection;

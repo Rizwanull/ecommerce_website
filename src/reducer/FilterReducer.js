@@ -70,19 +70,27 @@ const filterReducer = (state, action) => {
     case "FILTER_OUT_PRODUCTS":
       let { all_products } = state;
       let tempFilterProduct = [...all_products];
-      const { text,category } = state.filters;
+      console.log("🚀 ~ file: FilterReducer.js ~ line 73 ~ filterReducer ~ tempFilterProduct", tempFilterProduct)
+      const { text,category,company } = state.filters;
+      console.log("🚀 ~ file: FilterReducer.js ~ line 74 ~ filterReducer ~ category", category)
+      console.log("🚀 ~ file: FilterReducer.js ~ line 74 ~ filterReducer ~ company", company)
 
       if (text) {
         tempFilterProduct = tempFilterProduct.filter((curElem) => {
           return curElem.name.toLowerCase().includes(text);
         });
       }
-      if (category) {
-        tempFilterProduct = tempFilterProduct.filter((curElem) => {
-          return curElem.category === category;
-        });
-      }
-     
+     if (category !== "all") {
+       tempFilterProduct = tempFilterProduct.filter(
+         (curElem) => curElem.category === category
+       );
+     }
+
+     if (company !== "all") {
+       tempFilterProduct = tempFilterProduct.filter(
+         (curElem) => curElem.company.toLowerCase() === company.toLowerCase()
+       );
+     }
       
       return {
         ...state,
