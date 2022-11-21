@@ -3,15 +3,34 @@ const filterReducer = (state, action) => {
     case "LOAD_FILTER_PRODUCTS":
       let priceArr = action.payload.map((curElem) => curElem.price);
       console.log("🚀 ~ file: FilterReducer.js ~ line 5 ~ filterReducer ~ priceArr", priceArr)
+
+        //1st way to fine maxPrice in array
+      /*const maxPrice = Math.max.apply(null, priceArr);
+      ---------------------OR-----------------------------
+      const maxPrice = Math.max.apply(Math, priceArr);
+      console.log("🚀 ~ file: FilterReducer.js ~ line 10 ~ filterReducer ~ maxPrice", maxPrice)
+      */
+
+      /*
+      //2nd way to find max Value in array
+      const maxPrice=priceArr.reduce((initialVal,curVal)=>Math.max(initialVal,curVal),0)
+      console.log("🚀 ~ file: FilterReducer.js ~ line 15 ~ filterReducer ~ maxPrice", maxPrice)
+
+      */
+    
       let maxPrice = Math.max(...priceArr);
-      console.log("🚀 ~ file: FilterReducer.js ~ line 7 ~ filterReducer ~ maxPrice", maxPrice)
+      // console.log("🚀 ~ file: FilterReducer.js ~ line 7 ~ filterReducer ~ maxPrice", maxPrice)
       let minPrice = Math.min(...priceArr);
-      console.log("🚀 ~ file: FilterReducer.js ~ line 9 ~ filterReducer ~ minPrice", minPrice)
+      
+      // console.log("🚀 ~ file: FilterReducer.js ~ line 9 ~ filterReducer ~ minPrice", minPrice)
       return {
         ...state,
         filter_products: [...action.payload],
         all_products: [...action.payload],
-        filters: { ...state.filters, maxPrice, price: maxPrice,minPrice }
+        filters: { ...state.filters ,maxPrice,
+        price: maxPrice,
+        minPrice,},
+        
       };
     case "SET_GRID_VIEW":
       return {
@@ -107,7 +126,7 @@ const filterReducer = (state, action) => {
       else {
         tempFilterProduct = tempFilterProduct.filter((curElem) => curElem.price <= price);
         }
-      return {
+      return { 
         ...state, 
         filter_products: tempFilterProduct,
       };
