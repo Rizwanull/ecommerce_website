@@ -2,10 +2,11 @@ import React from "react";
 import { FaCheck } from "react-icons/fa";
 import styled from "styled-components";
 import { useFilterContext } from "../context/Filter_Context";
+import FormatPrice from '../helpers/FormatPrice';
 const FilterSection = () => {
   // const 
   const {
-    filters: { text, category, color },
+    filters: { text, category, color, price, maxPrice, minPrice },
     updateFilterValue,
     all_products,
   } = useFilterContext();
@@ -30,10 +31,7 @@ const FilterSection = () => {
   const categoryOnlyData = getUniqueData(all_products, "category");
   const companyOnlyData = getUniqueData(all_products, "company");
   const colorsOnlyData = getUniqueData(all_products, "colors");
-  console.log(
-    "🚀 ~ file: FilterSection.js ~ line 20 ~ FilterSection ~ colorsOnlyData",
-    colorsOnlyData
-  );
+ 
 
   return (
     <Wrapper>
@@ -133,6 +131,13 @@ const FilterSection = () => {
           })}
         </div>
       </div>
+      <div className="filter-price">
+        <h3>Price</h3>
+        <p>
+          <FormatPrice price={price} />
+        </p>
+        <input type="range" min={minPrice} name="price" max={maxPrice} value={price} onChange={updateFilterValue} />
+      </div>
     </Wrapper>
   );
 };
@@ -226,6 +231,14 @@ const Wrapper = styled.section`
     color: #fff;
     display: flex;
     margin: 2px auto;
+  }
+  .filter-price{
+    input{
+      box-shadow: none;
+      margin:0.5rem 0 1rem o;
+      padding: 0;
+      cursor: pointer;
+    }
   }
 `;
 export default FilterSection;

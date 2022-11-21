@@ -1,10 +1,17 @@
 const filterReducer = (state, action) => {
   switch (action.type) {
     case "LOAD_FILTER_PRODUCTS":
+      let priceArr = action.payload.map((curElem) => curElem.price);
+      console.log("🚀 ~ file: FilterReducer.js ~ line 5 ~ filterReducer ~ priceArr", priceArr)
+      let maxPrice = Math.max(...priceArr);
+      console.log("🚀 ~ file: FilterReducer.js ~ line 7 ~ filterReducer ~ maxPrice", maxPrice)
+      let minPrice = Math.min(...priceArr);
+      console.log("🚀 ~ file: FilterReducer.js ~ line 9 ~ filterReducer ~ minPrice", minPrice)
       return {
         ...state,
         filter_products: [...action.payload],
         all_products: [...action.payload],
+        filters: { ...state.filters, maxPrice, price: maxPrice,minPrice }
       };
     case "SET_GRID_VIEW":
       return {
@@ -50,6 +57,7 @@ const filterReducer = (state, action) => {
         }
       };
       newSortData = tempSortProduct.sort(sortingProducts);
+      // console.log("🚀 ~ file: FilterReducer.js ~ line 58 ~ filterReducer ~ newSortData", newSortData)
 
       return {
         ...state,
@@ -70,7 +78,7 @@ const filterReducer = (state, action) => {
     case "FILTER_OUT_PRODUCTS":
       let { all_products } = state;
       let tempFilterProduct = [...all_products];
-      const { text,category,company,color } = state.filters;
+      const { text,category,company,color,price } = state.filters;
 
       if (text) {
         tempFilterProduct = tempFilterProduct.filter((curElem) => {
@@ -92,7 +100,13 @@ const filterReducer = (state, action) => {
         tempFilterProduct = tempFilterProduct.filter(
           (curElem) => curElem.colors.includes(color));
       }
-      
+      if (price === 0 )
+      {
+        tempFilterProduct = tempFilterProduct.filter((curElem) => curElem.price == price);
+      }
+      else {
+        tempFilterProduct = tempFilterProduct.filter((curElem) => curElem.price <= price);
+        }
       return {
         ...state, 
         filter_products: tempFilterProduct,
