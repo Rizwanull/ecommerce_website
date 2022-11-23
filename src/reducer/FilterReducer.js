@@ -2,9 +2,12 @@ const filterReducer = (state, action) => {
   switch (action.type) {
     case "LOAD_FILTER_PRODUCTS":
       let priceArr = action.payload.map((curElem) => curElem.price);
-      console.log("🚀 ~ file: FilterReducer.js ~ line 5 ~ filterReducer ~ priceArr", priceArr)
+      console.log(
+        "🚀 ~ file: FilterReducer.js ~ line 5 ~ filterReducer ~ priceArr",
+        priceArr
+      );
 
-        //1st way to fine maxPrice in array
+      //1st way to fine maxPrice in array 
       /*const maxPrice = Math.max.apply(null, priceArr);
       ---------------------OR-----------------------------
       const maxPrice = Math.max.apply(Math, priceArr);
@@ -12,25 +15,22 @@ const filterReducer = (state, action) => {
       */
 
       /*
-      //2nd way to find max Value in array
+      //2nd way to find max Value in array 👉===REDUCE FUNCTION ===
       const maxPrice=priceArr.reduce((initialVal,curVal)=>Math.max(initialVal,curVal),0)
       console.log("🚀 ~ file: FilterReducer.js ~ line 15 ~ filterReducer ~ maxPrice", maxPrice)
 
       */
-    
+// 3rd way to find max Value in array 👉 ===using spread operator======
       let maxPrice = Math.max(...priceArr);
       // console.log("🚀 ~ file: FilterReducer.js ~ line 7 ~ filterReducer ~ maxPrice", maxPrice)
       let minPrice = Math.min(...priceArr);
-      
       // console.log("🚀 ~ file: FilterReducer.js ~ line 9 ~ filterReducer ~ minPrice", minPrice)
+
       return {
         ...state,
         filter_products: [...action.payload],
         all_products: [...action.payload],
-        filters: { ...state.filters ,maxPrice,
-        price: maxPrice,
-        minPrice,},
-        
+        filters: { ...state.filters, maxPrice, price: maxPrice, minPrice },
       };
     case "SET_GRID_VIEW":
       return {
@@ -62,7 +62,6 @@ const filterReducer = (state, action) => {
 
       const sortingProducts = (a, b) => {
         if (sorting_value === "lowest") {
-         
           return a.price - b.price;
         }
         if (sorting_value === "highest") {
@@ -97,39 +96,59 @@ const filterReducer = (state, action) => {
     case "FILTER_OUT_PRODUCTS":
       let { all_products } = state;
       let tempFilterProduct = [...all_products];
-      const { text,category,company,color,price } = state.filters;
+      const { text, category, company, color, price } = state.filters;
 
       if (text) {
         tempFilterProduct = tempFilterProduct.filter((curElem) => {
           return curElem.name.toLowerCase().includes(text);
         });
       }
-     if (category !== "all") {
-       tempFilterProduct = tempFilterProduct.filter(
-         (curElem) => curElem.category === category
-       );
-     }
-
-     if (company !== "all") {
-       tempFilterProduct = tempFilterProduct.filter(
-         (curElem) => curElem.company.toLowerCase() === company.toLowerCase()
-       );
-      }
-      if (color !== 'all') {
+      if (category !== "all") {
         tempFilterProduct = tempFilterProduct.filter(
-          (curElem) => curElem.colors.includes(color));
+          (curElem) => curElem.category === category
+        );
       }
-      if (price === 0 )
-      {
-        tempFilterProduct = tempFilterProduct.filter((curElem) => curElem.price == price);
+
+      if (company !== "all") {
+        tempFilterProduct = tempFilterProduct.filter(
+          (curElem) => curElem.company.toLowerCase() === company.toLowerCase()
+        );
       }
-      else {
-        tempFilterProduct = tempFilterProduct.filter((curElem) => curElem.price <= price);
-        }
-      return { 
-        ...state, 
+      if (color !== "all") {
+        tempFilterProduct = tempFilterProduct.filter((curElem) =>
+          curElem.colors.includes(color)
+        );
+      }
+      if (price === 0) {
+        tempFilterProduct = tempFilterProduct.filter(
+          (curElem) => curElem.price === price
+        );
+      } else {
+        tempFilterProduct = tempFilterProduct.filter(
+          (curElem) => curElem.price <= price
+        );
+      }
+      return {
+        ...state,
         filter_products: tempFilterProduct,
       };
+    
+    // to clear the filter we have applied
+    case "CLEAR_FILTERS":
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          text: "",
+          category: "all",
+          company: "all",
+          color: "all",
+          price: state.filters.maxPrice,
+          minPrice: state.filters.minPrice,
+          maxPrice: state.filters.maxPrice,
+        },
+      };
+    
 
     default:
       return state;
