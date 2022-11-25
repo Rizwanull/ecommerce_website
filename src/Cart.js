@@ -1,12 +1,49 @@
 import styled from "styled-components";
-
+import { useCartContext } from "./context/Cart_Context";
+import FormatPrice from './helpers/FormatPrice';
 const Cart = () => {
-  return <Wrapper></Wrapper>;
+  const { cart } = useCartContext();
+  console.log("🚀 ~ file: Cart.js ~ line 6 ~ Cart ~ cart", cart)
+
+  return <Wrapper>
+    <div className="container">
+      <div className="cart-heading grid grid-five-column">
+        <p>Item</p>
+        <p className="cart-hide">Price</p>
+        <p>Quantity</p>
+        <p className="cart-hide">subtotal</p>
+        <p>remove</p>
+      </div>
+      <hr />
+      {
+        cart.map((curElem,index) => {
+          return (
+            <div key={index} className="cart-item">
+              <div className="cart-user--profile">
+                <img src={curElem.image} alt="" />
+                <p>{curElem.name}</p>
+                <div className="color-div">
+                  <p className="color-style" style={{ backgroundColor: curElem.color }}>{curElem.color}</p>
+                  </div>
+                <p>{curElem.amount}</p>
+                <p>
+                  <FormatPrice price={curElem.price} />
+                </p>
+                <p>
+                  <FormatPrice price={curElem.price*curElem.amount} />  
+                </p>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </Wrapper>;
 };
 
 const Wrapper = styled.section`
   padding: 9rem 0;
-
+ 
   .grid-four-column {
     grid-template-columns: repeat(4, 1fr);
   }
