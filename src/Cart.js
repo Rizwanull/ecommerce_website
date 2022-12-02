@@ -1,9 +1,19 @@
+import { useState } from "react";
 import styled from "styled-components";
+import CartItem from "./components/CartItem";
+// import CheckOutAmount from "./components/CheckOutAmount";
+// import FormatPrice from './helpers/FormatPrice';
 import { useCartContext } from "./context/Cart_Context";
-import FormatPrice from './helpers/FormatPrice';
+
+
 const Cart = () => {
+  
   const { cart } = useCartContext();
-  console.log("🚀 ~ file: Cart.js ~ line 6 ~ Cart ~ cart", cart)
+  // console.log("🚀 ~ file: Cart.js ~ line 6 ~ Cart ~ cart", cart);
+
+  // const { amountInCart, setAmountInCart } = useState(1);
+  // console.log("🚀 ~ file: Cart.js:13 ~ Cart ~ amountInCart", amountInCart)
+ 
 
   return <Wrapper>
     <div className="container">
@@ -15,28 +25,13 @@ const Cart = () => {
         <p>remove</p>
       </div>
       <hr />
+      <div className="cart-item">
       {
-        cart.map((curElem,index) => {
-          return (
-            <div key={index} className="cart-item">
-              <div className="cart-user--profile">
-                <img src={curElem.image} alt="" />
-                <p>{curElem.name}</p>
-                <div className="color-div">
-                  <p className="color-style" style={{ backgroundColor: curElem.color }}>{curElem.color}</p>
-                  </div>
-                <p>{curElem.amount}</p>
-                <p>
-                  <FormatPrice price={curElem.price} />
-                </p>
-                <p>
-                  <FormatPrice price={curElem.price*curElem.amount} />  
-                </p>
-              </div>
-            </div>
-          );
+        cart.map((curElem) => {
+          return <CartItem key={curElem.id} {...curElem} />
         })
-      }
+        }
+        </div>
     </div>
   </Wrapper>;
 };
