@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import { FaTrash } from 'react-icons/fa';
+import { useCartContext } from '../context/Cart_Context';
 import FormatPrice from '../helpers/FormatPrice';
 import CartItemAmount from './CartItemAmount';
 const CartItem = ({ id, name, image, price, color, amount, max }) => {
-    const [productInCart, setProductInCart] = useState(1);
+  const { removeCartItem } = useCartContext();
+    // const [productInCart, setProductInCart] = useState(1);
     const setDecrease = () => {
-        productInCart > 1 ? setProductInCart(productInCart - 1) : setProductInCart(1);
+        amount > 1 ? amount(amount - 1) : amount(1);
      }
     const setIncrease = () => {
-        productInCart < max ? setProductInCart(productInCart + 1) : setProductInCart(max);
+        amount < max ? amount(amount + 1) : amount(max);
     }
    
     return (
@@ -41,7 +43,7 @@ const CartItem = ({ id, name, image, price, color, amount, max }) => {
         <CartItemAmount
           setDecrease={setDecrease}
           setIncrease={setIncrease}
-          productInCart={productInCart}
+          productInCart={amount}
         />
         <div className="cart-hide">
           <p>
