@@ -8,8 +8,8 @@ const CartItemAmount = ({ productInCart, setDecrease, setIncrease }) => {
     <Wrapper>
       <div className="toggle_amount">
         <button onClick={() => setDecrease()}>
-          {" "}
-          <FaMinus />{" "}
+        
+          <FaMinus />  
         </button>
         <div className="cart-amount">
           <p>{productInCart}</p>

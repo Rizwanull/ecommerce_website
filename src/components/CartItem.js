@@ -5,12 +5,12 @@ import FormatPrice from '../helpers/FormatPrice';
 import CartItemAmount from './CartItemAmount';
 const CartItem = ({ id, name, image, price, color, amount, max }) => {
   const { removeCartItem } = useCartContext();
-    // const [productInCart, setProductInCart] = useState(1);
+    const [productInCart, setProductInCart] = useState(amount);
     const setDecrease = () => {
-        amount > 1 ? amount(amount - 1) : amount(1);
+        productInCart > 1 ? setProductInCart(productInCart - 1) : setProductInCart(1);
      }
     const setIncrease = () => {
-        amount < max ? amount(amount + 1) : amount(max);
+        productInCart < max ? setProductInCart(productInCart + 1) : setProductInCart(max);
     }
    
     return (
@@ -43,7 +43,7 @@ const CartItem = ({ id, name, image, price, color, amount, max }) => {
         <CartItemAmount
           setDecrease={setDecrease}
           setIncrease={setIncrease}
-          productInCart={amount}
+          productInCart={productInCart}
         />
         <div className="cart-hide">
           <p>
@@ -51,7 +51,7 @@ const CartItem = ({ id, name, image, price, color, amount, max }) => {
           </p>
         </div>
         <div>
-          <FaTrash onClick={()=>removeCartItem(id)} className="remove_icon" />
+          <FaTrash onClick={() => removeCartItem(id)} className="remove_icon" />
         </div>
       </div>
     );
