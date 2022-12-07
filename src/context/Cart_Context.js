@@ -52,7 +52,8 @@ const CartProvider = ({ children }) => {
   
   //  to save and set data in localStorage 
   useEffect(() => {
-  
+    //for to get total item number in cart (trolly) we call dispatch
+    dispatch({type:"CART_TOTAL_ITEM"})
     localStorage.setItem("shoppingCart", JSON.stringify(state.cart));
   },[state.cart])
   return (
