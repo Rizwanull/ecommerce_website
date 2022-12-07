@@ -1,17 +1,29 @@
-import React, { useState } from 'react'
+// import React, { useState } from 'react'
 import { FaTrash } from 'react-icons/fa';
 import { useCartContext } from '../context/Cart_Context';
 import FormatPrice from '../helpers/FormatPrice';
 import CartItemAmount from './CartItemAmount';
 const CartItem = ({ id, name, image, price, color, amount, max }) => {
-  const { removeCartItem } = useCartContext();
+  const { removeCartItem,setDecrement,setIncrement } = useCartContext();
+
+  /* one way of to do increment and decrement item in cart 
+  and second way setDecrement and setIncrement is from cart_context and define in cart reducer
+
+
+
     const [productInCart, setProductInCart] = useState(amount);
     const setDecrease = () => {
-        productInCart > 1 ? setProductInCart(productInCart - 1) : setProductInCart(1);
+      productInCart > 1 ? setProductInCart(productInCart - 1) : setProductInCart(1);
+      
+      // return {
+      //   price: price * productInCart
+      // }
+      
      }
     const setIncrease = () => {
         productInCart < max ? setProductInCart(productInCart + 1) : setProductInCart(max);
     }
+    */
    
     return (
       <div className="card-heading grid grid-five-column">
@@ -41,9 +53,9 @@ const CartItem = ({ id, name, image, price, color, amount, max }) => {
         </div>
         {/* Quantity */}
         <CartItemAmount
-          setDecrease={setDecrease}
-          setIncrease={setIncrease}
-          productInCart={productInCart}
+          setDecrease={()=>setDecrement(id)}
+          setIncrease={()=>setIncrement(id)}
+          productInCart={amount}
         />
         <div className="cart-hide">
           <p>

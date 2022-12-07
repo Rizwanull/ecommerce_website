@@ -18,6 +18,7 @@ const initialState = {
   total_item: "",
   total_amount: "",
   shipping_fee: 50000,
+ 
 };
 const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -32,16 +33,30 @@ const CartProvider = ({ children }) => {
   const removeCartItem = (id) => {
     dispatch({ type: "REMOVE_CART_ITEM", payload: id });
   };
+
 //  to clear(delete) all items from cart 
   const clearCart = () => {
     dispatch({type:"CLEAR_CART"})
   }
+
+  // to set increment and decrement in cart page
+  const setDecrement = (id) => {
+  dispatch({type:"SET_DECREMENT",payload:id})
+}
+  
+  const setIncrement = (id) => {
+    dispatch({type:'SET_INCREMENT',payload:id})
+  }
+// end setIncrement and setDecrement
+  
+  
   //  to save and set data in localStorage 
   useEffect(() => {
+  
     localStorage.setItem("shoppingCart", JSON.stringify(state.cart));
   },[state.cart])
   return (
-    <CartContext.Provider value={{ ...state, addToCart,removeCartItem,clearCart }}>
+    <CartContext.Provider value={{ ...state, addToCart,removeCartItem,clearCart,setDecrement,setIncrement }}>
       {children}
     </CartContext.Provider>
   );
