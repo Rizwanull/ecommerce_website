@@ -119,7 +119,9 @@ const CartReducer = (state, action) => {
       cart: [],
     };
   }
-  /**********************to update the total number of item in cart (trolley)***************/
+  /*** this two function is going to commented because we simplifies the code of to get 
+   total_item and total_price from my cart in one action.type rather than two separate functions*****   
+  /**********************to update the total number of item in cart (trolley)***************
   if (action.type === "CART_TOTAL_ITEM") {
     let updatedItemVal = state.cart.reduce((initialValue, curElem) => {
       let { amount } = curElem;
@@ -131,18 +133,38 @@ const CartReducer = (state, action) => {
       total_item: updatedItemVal,
     };
   }
-  /********************for to get sub total price amount of all cart items ************************/
+  /*************for to get sub total price amount of all cart items ************************
   if (action.type === "SUB_TOTAL_PRICE") {
     let updatedSubTotal = state.cart.reduce((initialValue, curElem) => {
-      let { price, amount } = curElem; //here the curElem means the cart 
-      initialValue = initialValue + (price * amount);
+      let { price, amount } = curElem; //here the curElem means the cart
+      initialValue = initialValue + price * amount;
       return initialValue;
     }, 0);
     return {
       ...state,
-      total_price:updatedSubTotal
-    }
+      total_price: updatedSubTotal,
+    };
   }
+  *********************** end this two function comment *******************************************/
+
+  /**********************simplified code of cart sub totals and total price to calculate *****************/
+  if (action.type === "CART_TOTAL_ITEM_PRICE") {
+    let { total_item, total_price } = state.cart.reduce(
+      (accumulator, curElem) => {
+        let { price, amount } = curElem;
+        accumulator.total_item += amount;
+        accumulator.total_price += price * amount;
+        return accumulator;
+      },
+      { total_item: 0, total_price: 0 }
+    );
+    return {
+      ...state,
+      total_item,
+      total_price,
+    };
+  }
+  /*****************************************    end simplified code  ******************************** */
   return state;
 };
 
