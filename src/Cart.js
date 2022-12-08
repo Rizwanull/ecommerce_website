@@ -1,25 +1,28 @@
-
 import styled from "styled-components";
 import CartItem from "./components/CartItem";
 // import CheckOutAmount from "./components/CheckOutAmount";
 // import FormatPrice from './helpers/FormatPrice';
 import { useCartContext } from "./context/Cart_Context";
-import { NavLink } from 'react-router-dom';
-import { Button } from './styles/Button';
+import { NavLink } from "react-router-dom";
+import { Button } from "./styles/Button";
+import FormatPrice from "./helpers/FormatPrice";
 
 const Cart = () => {
-  
-  const { cart,clearCart } = useCartContext();
+  const { cart, clearCart, total_price, shipping_fee } = useCartContext();
   // console.log("🚀 ~ file: Cart.js ~ line 6 ~ Cart ~ cart", cart);
 
   // const { amountInCart, setAmountInCart } = useState(1);
   // console.log("🚀 ~ file: Cart.js:13 ~ Cart ~ amountInCart", amountInCart)
   if (cart.length === 0) {
-    return <EmptyDiv>
-      <h3>Your cart is empty</h3>
-      <NavLink to="/products"><Button>continue shopping</Button></NavLink>
-  </EmptyDiv>
-} 
+    return (
+      <EmptyDiv>
+        <h3>Your cart is empty</h3>
+        <NavLink to="/products">
+          <Button>continue shopping</Button>
+        </NavLink>
+      </EmptyDiv>
+    );
+  }
 
   return (
     <Wrapper>
@@ -42,25 +45,51 @@ const Cart = () => {
           <NavLink to="/products">
             <Button>continue shopping</Button>
           </NavLink>
-          <Button className="btn-clear" onClick={clearCart}>clear cart</Button>
+          <Button className="btn-clear" onClick={clearCart}>
+            clear cart
+          </Button>
+        </div>
+        {/* order total amount like price  */}
+        <div className="order-total--amount">
+          <div className="order-total--subdata">
+            <div>
+              <p>SubTotal: </p>
+              <p>
+                <FormatPrice price={total_price} />
+              </p>
+            </div>
+            <div>
+              <p>Shipping Fee:</p>
+              <p>
+                <FormatPrice price={shipping_fee} />
+              </p>
+            </div>
+            <hr />
+            <div>
+              <p>Order Total:</p>
+              <p>
+                <FormatPrice price={total_price + shipping_fee} />
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </Wrapper>
   );
 };
 const EmptyDiv = styled.div`
-display:grid;
-place-items: center;
-height: 50vh;
-h3{
-  font-size:4.2rem;
-  text-transform: capitalize;
-  font-weight: 400;
-}
+  display: grid;
+  place-items: center;
+  height: 50vh;
+  h3 {
+    font-size: 4.2rem;
+    text-transform: capitalize;
+    font-weight: 400;
+  }
 `;
 const Wrapper = styled.section`
   padding: 9rem 0;
- 
+
   .grid-four-column {
     grid-template-columns: repeat(4, 1fr);
   }
